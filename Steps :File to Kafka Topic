@@ -1,0 +1,18 @@
+install homebrew
+brew install kafka
+#start the bootstrap using the below command in one terminal
+/opt/homebrew/bin/zookeeper-server-start /opt/homebrew/etc/zookeeper/zoo.cfg
+#start Apache Kafka using below command
+/opt/homebrew/bin/kafka-server-start /opt/homebrew/etc/kafka/server.properties
+#command to create a topic 
+kafka-topics --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic file-data-to-kafka
+#to list the topics
+kafka-topics --bootstrap-server localhost:9092 --list
+#updated the connect-standalone.properties file in the config folder where kafka is installed by taking the back up.
+# Created the connector propeties as per the documentation.
+# https://kafka.apache.org/documentation/#connect
+#created the sample_data.txt file ,the content of this file has to be transferred to Kafka Topic.
+#post that ran the command 
+connect-standalone connect-standalone.properties my-file-source.properties 
+#obsereved the data in the consumer side.
+kafka-console-consumer --bootstrap-server localhost:9092 --topic file-data-to-kafka
